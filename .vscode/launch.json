@@ -10,6 +10,12 @@
             "request": "launch",
             "projectPath": "${workspaceFolder}/src/DotnetNewWebapi/DotnetNewWebapi.csproj",
             "launchProfile": "${workspaceFolder}/src/DotnetNewWebapi/Properties/launchSettings.json" // Имя профиля из launchSettings.json
+         },
+         {
+            "name": "Build CSharp_Tasks",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/CSharp_Tasks/CSharp_Tasks.csproj",
          }
     ]
 }
