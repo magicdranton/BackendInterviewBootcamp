@@ -1,4 +1,5 @@
 using DotnetNewWebapi.Middleware;
+using DotnetNewWebapi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
+builder.Services.AddSingleton<ISingletonService, CSingletonService>();
+builder.Services.AddScoped<IScopedService, CScopedService>();
+builder.Services.AddTransient<ITransientService, CTransientService>();
+builder.Services.AddHostedService<CSomeBackgroundService>();
 
 var app = builder.Build();
 
