@@ -3,24 +3,40 @@ namespace CSharp_Tasks
     public class CTasks_Day2
     {
         // Task 1: Check if a string is a palindrome
-        public static bool IsPalindrome(string text) 
+        public static bool IsPalindrome(string p_text) 
         {
             bool v_Result = true;
-            string v_CleanText = text.Replace(" ", string.Empty).ToLower();
             
-            int v_RightPtr = (int)(v_CleanText.Length / 2);
-            int v_LeftPtr = (v_CleanText.Length % 2 == 1) ? v_RightPtr: v_RightPtr - 1;
+            int v_RightPtr = p_text.Length - 1;
+            int v_LeftPtr = 0;
             
-            while ((v_LeftPtr >= 0) && (v_RightPtr < v_CleanText.Length))
+            while (v_LeftPtr < v_RightPtr)
             {
-                    if (v_CleanText[v_LeftPtr] != v_CleanText[v_RightPtr]) 
-                    {
-                        v_Result = false;
-                        break;
-                    }
-                    
-                    v_LeftPtr--;
-                    v_RightPtr++;
+                // whitespace throttling
+                while (Char.IsWhiteSpace(p_text[v_LeftPtr]) && v_LeftPtr < p_text.Length)
+                {
+                    v_LeftPtr++;
+                }               
+
+                while (Char.IsWhiteSpace(p_text[v_RightPtr]) && (v_RightPtr >= 0))
+                {
+                    v_RightPtr--;
+                }
+
+                // Guard checks                
+                if (v_LeftPtr > v_RightPtr) break;
+                
+                char v_FirstC = Char.ToLowerInvariant(p_text[v_LeftPtr]);
+                char v_SecondC = Char.ToLowerInvariant(p_text[v_RightPtr]);
+
+                if (v_FirstC != v_SecondC) 
+                {
+                    v_Result = false;
+                    break;
+                }
+                
+                v_LeftPtr++;
+                v_RightPtr--;
             }	
             
             return v_Result;

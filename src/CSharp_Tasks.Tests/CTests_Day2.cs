@@ -13,6 +13,9 @@ public class CTests_Day2
     [TestCase("hello", false)]
     [TestCase("Was it a car or a cat I saw", true)]    
     [TestCase("Not a palindrome", false)]
+    [TestCase("    a   ", true)]
+    [TestCase("A b B  a", true)]
+    [TestCase(" ", true)]
     [TestCase("", true)]
     public void Test_IsPalindrome(string p_InputStr, bool p_ExpectedResult)
     {        
@@ -36,15 +39,12 @@ public class CTests_Day2
 public class CTests_LRU_Cache
 {
     private CSharp_Tasks.CLRU_Cache? m_Cache = null;
-    [SetUp]
-    public void SetUp()
+   
+    [Test]
+    public void Test_LRU_Cache_3()
     {
         m_Cache = new CLRU_Cache(3);
-    }
 
-    [Test]
-    public void Test_LRU_Cache()
-    {
         m_Cache.Put("Apple", "APL");
         m_Cache.Put("Banana", "BAN");
         m_Cache.Put("Coconut", "COC");
@@ -61,5 +61,26 @@ public class CTests_LRU_Cache
         v_Value = m_Cache.Get("Coconut");
         Assert.That(v_Value, Is.EqualTo("COC"));
         Assert.That(m_Cache.DisplayCache(), Is.EqualTo("COC DUR APL "));
+    }
+
+    [Test]
+    public void Test_LRU_Cache_1()
+    {
+        m_Cache = new CLRU_Cache(1);
+
+        m_Cache.Put("A", "A");
+        m_Cache.Put("B", "B");
+
+        string? v_Val = m_Cache.Get("A");
+        Assert.That(v_Val, Is.Null);
+
+        v_Val = m_Cache.Get("B");
+        Assert.That(v_Val, Is.EqualTo("B"));
+
+        m_Cache.Put("A", "1");
+        m_Cache.Put("A", "2");
+        
+        v_Val = m_Cache.Get("A");
+        Assert.That(v_Val, Is.EqualTo("2"));
     }
 }

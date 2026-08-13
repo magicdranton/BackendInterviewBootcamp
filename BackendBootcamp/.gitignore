@@ -1,0 +1,6 @@
+# binaries and logs
+*.exe
+*.log
+bin/
+obj/
+.vs/

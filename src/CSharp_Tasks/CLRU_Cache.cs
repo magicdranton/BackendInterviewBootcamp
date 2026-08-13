@@ -29,8 +29,9 @@ namespace CSharp_Tasks
 			m_LRU_Rating.RemoveLast();
 		}
 		
-		private void inner_MoveToTop(SKeyVal p_Entry)
+		private void inner_MoveToTop(LinkedListNode<SKeyVal> p_Entry)
 		{
+			
 			m_LRU_Rating.Remove(p_Entry);
 			m_LRU_Rating.AddFirst(p_Entry);
 		}
@@ -45,11 +46,11 @@ namespace CSharp_Tasks
 				v_FoundListNode.Value = v_FoundKeyVal;
 
 				// Move current entry to the top of Rating
-				inner_MoveToTop(m_Dict[p_Key].Value);
+				inner_MoveToTop(m_Dict[p_Key]);
 				return;
 			}
 			
-			if (m_Dict.Count > m_Capacity) this.inner_RemoveNonNeeded();
+			if (m_Dict.Count >= m_Capacity) this.inner_RemoveNonNeeded();
 			var v_NewKVPair = new SKeyVal { Key = p_Key, Value = p_Value };
 			var v_NewListEntry = m_LRU_Rating.AddFirst(v_NewKVPair);		
 
@@ -63,7 +64,7 @@ namespace CSharp_Tasks
 			if (m_Dict.TryGetValue(p_Key, out v_FoundEntry)) 
 			{
 				// Move current entry to the top of Rating
-				inner_MoveToTop(m_Dict[p_Key].Value);
+				inner_MoveToTop(m_Dict[p_Key]);
 				return v_FoundEntry.Value.Value;		
 			}
 			return null;
