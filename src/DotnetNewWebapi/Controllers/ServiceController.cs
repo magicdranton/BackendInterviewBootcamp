@@ -1,5 +1,8 @@
+using DotnetNewWebapi.Config;
 using DotnetNewWebapi.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace DotnetNewWebapi.Controllers;
 
@@ -10,8 +13,13 @@ public class CServicesController: ControllerBase
     ISingletonService m_SingleService;
     IScopedService m_ScopedService;
     ITransientService m_TransientService;
+    IOptions<CApplicationOptions> m_AppOptions;
+    IOptions<CExternalApiOptions> m_ExtApiOptions;
+
     public CServicesController
     (
+        IOptions<CApplicationOptions> p_AppOptions,
+        IOptions<CExternalApiOptions> p_ExtApiOptions,
         ISingletonService p_SingleService,
         IScopedService p_ScopedService,
         ITransientService p_TransientService
@@ -20,9 +28,12 @@ public class CServicesController: ControllerBase
         m_SingleService = p_SingleService;   
         m_ScopedService = p_ScopedService;
         m_TransientService = p_TransientService;
+
+        m_AppOptions = p_AppOptions;
+        m_ExtApiOptions = p_ExtApiOptions;
     }
     
-    [HttpGet(Name = "lifetime")]
+    [HttpGet("lifetime")]
     public IEnumerable<Guid> GetServiceIDs()
     {
         return new Guid[3]
@@ -31,5 +42,14 @@ public class CServicesController: ControllerBase
             m_ScopedService.InstanceId,
             m_TransientService.InstanceId
         };
+    }
+
+    [HttpGet("configuration")]
+    public string GetConfigVals()
+    {
+        string v_FirstPart = JsonSerializer.Serialize(m_AppOptions);
+        string v_SecondPart = JsonSerializer.Serialize(m_ExtApiOptions);
+
+        return $"{{\"application\":{v_FirstPart}" + $" \"externalApi\":{v_SecondPart}}}";
     }
 }

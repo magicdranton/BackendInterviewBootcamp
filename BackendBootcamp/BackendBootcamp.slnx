@@ -1,5 +1,9 @@
 <Solution>
-  <Project Path="../src/CSharp_Tasks.Tests/CSharp_Tasks.Tests.csproj" />
-  <Project Path="../src/CSharp_Tasks/CSharp_Tasks.csproj" />
+  <Project Path="../src/CSharp_Tasks.Tests/CSharp_Tasks.Tests.csproj">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
+  <Project Path="../src/CSharp_Tasks/CSharp_Tasks.csproj">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
   <Project Path="../src/DotnetNewWebapi/DotnetNewWebapi.csproj" />
 </Solution>
