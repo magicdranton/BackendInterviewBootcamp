@@ -24,17 +24,17 @@ public class CWeatherService: IWeatherService
 
             await Task.Delay(5000);
 
-            throw new Exception("general exc");
+            if (string.IsNullOrWhiteSpace(p_city)) throw new Exception("City is required");
 
             string v_Result = $"weather in {p_city} is GOOD!";
 
-            m_Logger.LogInformation("GetWeatherAsync finished with result: {Result}", v_Result);
+            m_Logger.LogInformation("GetWeatherAsync finished with result: {Result}", v_Result);            
             return v_Result;
         }
         catch (Exception e)
         {
-            m_Logger.LogError("GetWeatherAsync failed with error: {error}", e);
-            return string.Empty;
+            m_Logger.LogError(e, "GetWeatherAsync failed with error: {message}", e.Message);
+            return e.Message;
         }
     }
 }

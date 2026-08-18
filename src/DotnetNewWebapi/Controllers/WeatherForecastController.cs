@@ -5,7 +5,7 @@ using DotnetNewWebapi.Services;
 namespace DotnetNewWebapi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("GetCityWeather")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
@@ -22,9 +22,9 @@ public class WeatherForecastController : ControllerBase
         _weatherService = p_WeatherService;
     }
 
-    [HttpGet("GetCityWeather")]
-    public async Task<string> Get(string p_City)
+    [HttpGet]
+    public Task<string> Get(string p_City)
     {
-        return await _weatherService.GetWeatherAsync(p_City);
+        return _weatherService.GetWeatherAsync(p_City);
     }
 }

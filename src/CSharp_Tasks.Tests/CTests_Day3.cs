@@ -19,6 +19,18 @@ public class CTests_Day3
         Assert.That(res, Is.EqualTo(expresult));     
     }
 
+    [TestCase(new int[] { 2, 7, 11, 15 }, 9, new int[] { 0, 1 })]
+    [TestCase(new int[] { 11, 2, 15, 7 }, 9, new int[] { 1, 3 })]
+    [TestCase(new int[] { 14, 1, 5, 10, 42, 11, 11, 25, 1, 1, 40, 41 }, 23, new int[] { -1, -1 })]
+    [TestCase(new int[] { 1 }, 23, new int[] { -1, -1 })]
+    [TestCase(new int[] { 2, 10 }, 12, new int[] { 0, 1 })]
+    [TestCase(new int[] { 11, 4, 2, 10 }, 12, new int[] { 2, 3 })]
+    public void Test_TwoSum_NonSorted(int[] input, int target, int[] expresult)
+    {
+        int[] res = CSharp_Tasks.CTasks_Day3.FindTwoSum_NonSorted(input, target);
+        Assert.That(res, Is.EqualTo(expresult));
+    }
+
     [TestCase("swiss", 'w')]
     [TestCase("aaabbbccc", null)]
     [TestCase("aaabbbcccdddeeefffg", 'g')]

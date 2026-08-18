@@ -47,6 +47,29 @@ public class CTasks_Day3
         return [-1, -1];    // Sum not found
     }
 
+    public static int[] FindTwoSum_NonSorted(int[] input, int target)
+    {
+        Dictionary<int, int> numIndexes = new Dictionary<int, int>();
+
+        for (int i=0; i<input.Length; i++)
+        {
+            int restVal = target - input[i];
+
+            if (numIndexes.ContainsKey(restVal))    // Yes, we found a pair!
+            {
+                return [numIndexes[restVal], i];
+            }
+
+            // pair not found, append cur val to dict if still not there
+            if (!numIndexes.ContainsKey(input[i]))
+            {
+                numIndexes.Add(input[i], i);
+            }
+        }
+
+        return [-1, -1];
+    }
+
     /*
      Дана строка символов. Нужно за O(N) найти и вернуть первый уникальный (неповторяющийся) символ строки.
     Если таких символов нет, вернуть null.

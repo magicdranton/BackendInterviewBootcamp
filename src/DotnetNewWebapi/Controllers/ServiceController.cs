@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace DotnetNewWebapi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("")]
 public class CServicesController: ControllerBase
 {
     ISingletonService m_SingleService;
@@ -45,11 +45,17 @@ public class CServicesController: ControllerBase
     }
 
     [HttpGet("configuration")]
-    public string GetConfigVals()
+    public IActionResult GetConfigVals()
     {
         string v_FirstPart = JsonSerializer.Serialize(m_AppOptions);
         string v_SecondPart = JsonSerializer.Serialize(m_ExtApiOptions);
 
-        return $"{{\"application\":{v_FirstPart}" + $" \"externalApi\":{v_SecondPart}}}";
+        return Ok(
+            new
+            {
+                Application = m_AppOptions.Value,
+                ExternalApi = m_ExtApiOptions.Value          
+            }
+        );
     }
 }
