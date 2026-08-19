@@ -95,9 +95,9 @@ public class CTasks_Day3
             }
         }
 
-        foreach (KeyValuePair<char, int> pair in  charCnt)  // Порядок обхода важен. Здесь итератор пойдёт от начала словаря (~ от начала строки)
+        foreach (char c in input)  // Порядок обхода важен. Здесь итератор пойдёт от начала строки
         {
-            if (pair.Value == 1) return pair.Key;   // Found !!
+            if (charCnt[c] == 1) return c;   // Found !!
         }
 
         return null;
