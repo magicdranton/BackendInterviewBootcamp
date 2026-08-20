@@ -1,6 +1,7 @@
+using DotnetNewWebapi.Config;
 using DotnetNewWebapi.Middleware;
 using DotnetNewWebapi.Services;
-using DotnetNewWebapi.Config;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOptions<CApplicationOptions>().Bind(builder.Configuration.GetSection(CApplicationOptions.SectName)).ValidateDataAnnotations().ValidateOnStart();
 builder.Services.AddOptions<CExternalApiOptions>().Bind(builder.Configuration.GetSection(CExternalApiOptions.SectName)).ValidateDataAnnotations().ValidateOnStart();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());    // Allowing ModelBinder to resolve string enum values
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
